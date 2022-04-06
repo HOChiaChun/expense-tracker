@@ -10,8 +10,8 @@ const Category = require("../../models/category")
 
 const SEED_USER = { name: 'User1', email: 'user1@example.com', password: '12345678' }
 
-const SEED_TRACKER = [{ name: "早餐", date: "2022-03-12", amount: 123, catrgory: "交通出行" },
-                      { name: "早餐", date: "2022-03-12", amount: 123, catrgory: "交通出行" }]
+const SEED_TRACKER = [{ name: "早餐", date: "2022-03-11", amount: 100, catrgory: "交通出行" },
+                      { name: "管理費", date: "2022-03-12", amount: 200, catrgory: "居家物業" }]
 
 
 
@@ -25,7 +25,23 @@ db.once("open", () => {
       email: SEED_USER.email,
       password: hash
     }))
-    .then(user => console.log(user))
+    .then(user => {
+      const userId = user._id
+      return Promise.all(Array.from(
+        { length: 2 },
+        (_, i) => 
+        
+        Category.findOne({ category: SEED_TRACKER[i].catrgory })
+        .then(userCategory => {
+           const categoryId = userCategory.image
+           return Tracker.create({ name: SEED_TRACKER[i].name, date: SEED_TRACKER[i].date, amount: SEED_TRACKER[i].amount, category: SEED_TRACKER[i].catrgory, userId, categoryId  })
+        })
+      ))
+    })
+    .then(() => {
+      console.log("done.")
+      process.exit()
+    })
 })
 
 
