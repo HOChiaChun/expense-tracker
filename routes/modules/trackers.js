@@ -19,7 +19,7 @@ router.post("/", (req, res) => {
   Category.findOne({ category })
     .lean()
     .then(categoryOne => {
-      const categoryId = categoryOne._id
+      const categoryId = categoryOne.image
       return Tracker.create({ name, date, amount, category, userId, categoryId })
         .then(() => res.redirect("/"))
         .catch(error => console.log(error))
