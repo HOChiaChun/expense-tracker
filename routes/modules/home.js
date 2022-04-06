@@ -19,7 +19,7 @@ router.get("/", (req, res, next) => {
     .catch(error => next(new Error(`some error ${error}`)))
 })
 
-router.post("/search", (req, res) => {
+router.post("/search", (req, res, next) => {
   const userId = req.user._id
   const sort = req.body.sort
   let mode ={}
@@ -55,7 +55,7 @@ router.post("/search", (req, res) => {
       })
         return res.render("index", { trackers, totalAmount, sort })
     })
-    .catch(error => console.log(error))
+    .catch(error => next(new Error(`some error ${error}`)))
 })
 
 

@@ -13,7 +13,7 @@ router.get("/new", (req, res) => {
   res.render("new")
 })
 
-router.post("/", (req, res) => {
+router.post("/", (req, res, next) => {
   const userId = req.user._id
   const { name, date, amount, category } = req.body
   Category.findOne({ category })
@@ -24,17 +24,17 @@ router.post("/", (req, res) => {
         .then(() => res.redirect("/"))
         .catch(error => console.log(error))
       })
-    .catch(error => console.log(error))
+    .catch(error => next(new Error(`some error ${error}`)))
 })
 
 
-router.get("/:tracker_id/edit", (req, res) => {
+router.get("/:tracker_id/edit", (req, res, next) => {
   const userId = req.user._id
   const _id = req.params.tracker_id
   return Tracker.findOne({ _id, userId })
     .lean()
     .then(tracker => res.render("edit", { tracker }))
-    .catch(error => console.log(error))
+    .catch(error => next(new Error(`some error ${error}`)))
 })
 
 router.put("/:tracker_id", (req, res, next) => {
@@ -53,13 +53,13 @@ router.put("/:tracker_id", (req, res, next) => {
     .catch(error => next(new Error(`some error ${error}`)))
 })
 
-router.delete("/:tracker_id", (req, res) => {
+router.delete("/:tracker_id", (req, res, next) => {
   const userId = req.user._id
   const _id = req.params.tracker_id
   return Tracker.findOne({ _id, userId })
     .then(tracker => tracker.remove())
     .then(() => res.redirect("/"))
-    .catch(error => console.log(error))
+    .catch(error => next(new Error(`some error ${error}`)))
 })
 
 
