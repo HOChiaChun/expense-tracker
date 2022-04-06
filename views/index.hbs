@@ -1,11 +1,14 @@
 <div class="container search-bar" style="display: flex; flex-direction: column; margin-top: 30px;">
-  <form action="/search">
-    <select class="form-control" id="sort" name="sort" staria-label="Default select example">
-      <option></option>
-      <option></option>
-      <option>類別</option>
-      <option>日期</option>
+  <form action="/search" method="post" style="display: flex; justify-content: center;">
+    <select class="form-select" id="sort" name="sort" staria-label="Default select example" style=" width: 500px;">
+      <option>全部</option>
+      <option>居家物業</option>
+      <option>交通出行</option>
+      <option>休閒娛樂</option>
+      <option>餐飲食品</option>
+      <option>其他</option>
     </select>
+    <button type="submit" class="btn btn-success">選取</button>
   </form>
   <div style="display: flex; justify-content:center; margin-top: 40px; margin-bottom:20px;">
     <h5>總金額：{{totalAmount}}</h5>

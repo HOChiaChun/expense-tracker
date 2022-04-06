@@ -2,7 +2,6 @@ const express = require("express")
 const router = express.Router()
 
 const Tracker = require("../../models/tracker")
-const Category = require("../../models/category")
 
 
 
@@ -42,7 +41,7 @@ router.put("/:tracker_id", (req, res, next) => {
       tracker.amount = amount
       return tracker.save()
     })
-    .then(() => res.redirect(`/trackers/${_id}`))
+    .then(() => res.redirect(`/`))
     .catch(error => next(new Error(`some error ${error}`)))
 })
 
