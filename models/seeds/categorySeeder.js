@@ -1,5 +1,5 @@
 const CATEGORY = {
-  家居物業: `<i class="fa- solid fa-house"></i>`,
+  居家物業: `<i class="fa- solid fa-house"></i>`,
   交通出行: `<i class="fa-solid fa-van-shuttle"></i>`,
   休閒娛樂: `<i class="fa-solid fa-face-grin-beam"></i>`,
   餐飲食品: `<i class="fa-solid fa-utensils"></i>`,
@@ -15,7 +15,7 @@ db.once("open", () => {
   const objectvalues = Object.values(CATEGORY)
   return Promise.all(Array.from(
     { length: 5 },
-    (_, i) => Category.create({ name: objectkeys[i], image: objectvalues[i] })
+    (_, i) => Category.create({ category: objectkeys[i], image: objectvalues[i] })
   ))
   .then(() => {
     console.log("done")

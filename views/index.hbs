@@ -8,7 +8,7 @@
       <option>餐飲食品</option>
       <option>其他</option>
     </select>
-    <button type="submit" class="btn btn-success">選取</button>
+    <button type="submit" class="btn btn-success" style="margin-left: 10px;;">選取</button>
   </form>
   <div style="display: flex; justify-content:center; margin-top: 40px; margin-bottom:20px;">
     <h5>總金額：{{totalAmount}}</h5>
@@ -18,7 +18,7 @@
 {{#each trackers}}
   <div style="display: flex; justify-content: center; position: relative">
     <div class="card" style="display: inline-block; height: 100px; width: 500px; position: relative">
-      <span style="position: absolute; left: 20px; top: 10px;">{{this.category}}</span>
+      <span style="position: absolute; left: 20px; top: 10px;">{{{this.category}}}</span>
       <span style="position: absolute; left: 100px; top: 10px;">{{this.name}}</span>
       <span style="position: absolute; left: 100px; bottom: 20px;">{{this.date}}</span>
       <span style="position: absolute; right: 50px; top: 40%;">{{this.amount}}</span>

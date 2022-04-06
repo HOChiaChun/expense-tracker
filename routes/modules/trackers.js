@@ -2,6 +2,7 @@ const express = require("express")
 const router = express.Router()
 
 const Tracker = require("../../models/tracker")
+const Category = require("../../models/category")
 
 
 
@@ -15,10 +16,17 @@ router.get("/new", (req, res) => {
 router.post("/", (req, res) => {
   const userId = req.user._id
   const { name, date, amount, category } = req.body
-  return Tracker.create({ name, date, amount, category, userId })
-    .then(() => res.redirect("/"))
+  Category.findOne({ category })
+    .lean()
+    .then(categoryOne => {
+      const categoryId = categoryOne._id
+      return Tracker.create({ name, date, amount, category, userId, categoryId })
+        .then(() => res.redirect("/"))
+        .catch(error => console.log(error))
+      })
     .catch(error => console.log(error))
 })
+
 
 router.get("/:tracker_id/edit", (req, res) => {
   const userId = req.user._id
