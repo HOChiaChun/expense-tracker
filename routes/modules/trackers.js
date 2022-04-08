@@ -47,7 +47,11 @@ router.put("/:tracker_id", (req, res, next) => {
       tracker.date = date
       tracker.category = category
       tracker.amount = amount
-      return tracker.save()
+      Category.findOne({ category })
+        .then(categoryEdit => {
+          tracker.categoryId = categoryEdit.image
+          return tracker.save()
+        })
     })
     .then(() => res.redirect(`/`))
     .catch(error => next(new Error(`some error ${error}`)))
