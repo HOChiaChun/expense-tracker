@@ -13,8 +13,7 @@ router.get("/new", (req, res) => {
 
 router.post("/", (req, res, next) => {
   const userId = req.user._id
-  const { name, date,  category } = req.body
-  const amount = req.body.amount.replace(/[^0-9]/g, "")
+  const { name, date,  category, amount } = req.body
   Category.findOne({ category })
     .lean()
     .then(categoryOne => {
@@ -39,8 +38,7 @@ router.get("/:tracker_id/edit", (req, res, next) => {
 router.put("/:tracker_id", (req, res, next) => {
   const userId = req.user._id
   const _id = req.params.tracker_id
-  const { name, date, category } = req.body
-  const amount = req.body.amount.replace(/[^0-9]/g, "")
+  const { name, date, category, amount } = req.body
   return Tracker.findOne({ _id, userId })
     .then(tracker => {
       tracker.name = name
