@@ -7,15 +7,14 @@ const Category = require("../../models/category")
 
 
 
-
-
 router.get("/new", (req, res) => {
   res.render("new")
 })
 
 router.post("/", (req, res, next) => {
   const userId = req.user._id
-  const { name, date, amount, category } = req.body
+  const { name, date,  category } = req.body
+  const amount = req.body.amount.replace(/[^0-9]/g, "")
   Category.findOne({ category })
     .lean()
     .then(categoryOne => {
@@ -40,18 +39,22 @@ router.get("/:tracker_id/edit", (req, res, next) => {
 router.put("/:tracker_id", (req, res, next) => {
   const userId = req.user._id
   const _id = req.params.tracker_id
-  const { name, date, category, amount } = req.body
+  const { name, date, category } = req.body
+  const amount = req.body.amount.replace(/[^0-9]/g, "")
   return Tracker.findOne({ _id, userId })
     .then(tracker => {
       tracker.name = name
       tracker.date = date
       tracker.category = category
       tracker.amount = amount
+      console.log(tracker.categoryId)
       Category.findOne({ category })
         .then(categoryEdit => {
           tracker.categoryId = categoryEdit.image
           return tracker.save()
         })
+        .catch(error => next(new Error(`some error ${error}`)))
+        
     })
     .then(() => res.redirect(`/`))
     .catch(error => next(new Error(`some error ${error}`)))

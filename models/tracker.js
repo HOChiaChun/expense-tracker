@@ -10,7 +10,6 @@ function formatDate(date) {
   if (Number(day) <= 9) {
     day = '0' + day
   }
-
   return [years, month, day].join('-');
 }
 

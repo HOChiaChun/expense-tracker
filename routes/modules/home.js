@@ -1,4 +1,5 @@
 const express = require("express")
+const tracker = require("../../models/tracker")
 const Tracker = require("../../models/tracker")
 const router = express.Router()
 
@@ -10,10 +11,12 @@ router.get("/", (req, res, next) => {
     .lean()
     .sort({ _id: 'asc' })
     .then(trackers => {
-      let totalAmount = 0
-      trackers.forEach(tracker => {
-        totalAmount += tracker.amount
-      })
+    const trackersAmount = []
+      trackers.forEach(tracker => trackersAmount.push(tracker.amount))
+      const initialValue = 0
+      const totalAmount = trackersAmount.reduce(
+        (previousValue, currentValue) => previousValue + currentValue,
+        initialValue)
         return res.render("index", { trackers, totalAmount })
     })
     .catch(error => next(new Error(`some error ${error}`)))

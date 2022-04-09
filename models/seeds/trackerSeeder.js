@@ -32,8 +32,7 @@ db.once("open", () => {
       const userId = user._id
       return Promise.all(Array.from(
         { length: 2 },
-        (_, i) => 
-        
+        (_, i) =>
         Category.findOne({ category: SEED_TRACKER[i].catrgory })
         .then(userCategory => {
            const categoryId = userCategory.image
